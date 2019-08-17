@@ -1,0 +1,51 @@
+How to use build_book
+=====================
+
+Command options
+---------------
+
+  bin/build_book -h
+
+Process
+-------
+
+  With thanks to mikekaganski of Freenode#libreoffice
+
+  Run build_book
+
+  Open LibreOffice Writer (or similar)
+
+  1.      To convert the string '__page_break__' to an actual page break:
+    1.1. The __page_break__ string should already start a new paragraph.
+    1.2. Edit -> Find and Replace 
+          Find:       __page_break__
+          Find All
+          Close
+    1.3. Upper menu: Format -> Paragraph -> Text Flow
+          "Breaks"    -> Insert
+          "Type"      -> Page
+          "Position"  -> Before
+          "Ok"
+    1.4.  Edit -> Find and Replace
+          Find:       __page_break__
+          Replace:    <leave empty>
+          Replace All
+          Close
+
+  2.      To make the Chapter headers bold.
+    2.1.  Edit -> Find and Replace
+    2.2.  Find:     Chapter [:digit:]{3}
+    2.3.  Format -> Font -> Style -> Bold
+    2.4.  Replace:  &
+    2.5.  Replace All
+    2.6.  Close
+
+  3.      To make the Time_Location headers bold.
+    3.1.  Edit -> Find and Replace
+    3.2.  Find:     \[.*
+    3.3.  Format -> Font -> Style -> Bold
+    3.4.  Replace:  &
+    3.5.  Replace All
+    3.6.  Close
+
+
