@@ -1,0 +1,142 @@
+#!/usr/bin/env ruby
+
+# build_book [-t <TITLE>, -p]
+ 
+# Assumes scenes in scene_dir are ordered.
+# If TITLE given writes book/<TITLE>, otherwise TITLE is 
+# the current working directory (uppercare) appended with an 
+# underscore and an ISO 8601 compliant date string in YYYYMMDD format.
+# For example, running this in tdw_1429_1 on 15 Jul 2018 gives:
+#   TDW_1429_1_20180715 
+
+# TODO:
+#   Add other bits; dedication, afterward, author bio, etc.
+# Add -h help option.
+
+require 'fileutils'
+require 'optparse'
+
+book_dir    = 'book'
+chapter_dir = 'chapters'
+extra_dir   = 'extras'
+scene_dir   = 'scenes'
+pre_extras  = ['title_page', 'dedication']
+post_extras = ['notes', 'afterward', 'author_bio']
+oggi        = Time.now.strftime("%Y%j")
+this_dir    = Dir.pwd.split('/')[-1]
+
+def make_title(options)
+  if options[:title] == 0
+    book_name_base = [options[:this_dir].upcase, options[:today]].join('_')
+  else
+    book_name_base = options[:title]
+  end
+  book_name_base.gsub!(/ /, '_')
+  book_name = book_name_base.gsub(/[\W]/, '')
+end
+
+def usage
+  cmd = File.basename($PROGRAM_NAME) 
+  puts "#{cmd} [ -t <title> ] [ -p ] [ -h ]"
+  puts "\t -t <title>   # The title"
+  puts "\t -p           # Has a prologue"
+  puts "\t -h           # Help menu"
+end
+
+options             = Hash.new(0)
+options[:this_dir]  = Dir.pwd.split('/')[-1]
+options[:today]     = Time.now.strftime("%Y%m%d")
+
+option_parser = OptionParser.new do |opts|
+  opts.on('-t', '--title TITLE', 'Title of the book') do |t|
+    options[:title] = t
+  end
+  opts.on('-p', '--prologue', 'Book has a prologue') do 
+    options[:prologue] = true
+  end
+  opts.on('-h', '--help', 'Help menu') do
+    usage
+    exit
+  end
+end
+option_parser.parse!
+
+book_name = make_title(options)
+
+if File.directory?(book_dir)
+  FileUtils.rm_rf(book_dir)
+end
+Dir.mkdir(book_dir)
+
+if File.directory?(chapter_dir)
+  FileUtils.rm_rf(chapter_dir)
+end
+Dir.mkdir(chapter_dir)
+
+if File.directory?(scene_dir)
+  scene_files = Dir.entries(scene_dir)
+  scene_files.sort!
+else
+  puts("Need scenes.")
+  exit
+end
+
+if options[:prologue] == true
+  chapter_count = 0
+else
+  chapter_count = 1
+end
+
+book_file     = book_dir + '/' + book_name
+header_space  = "\n\n"
+scene_space   = "\n\n\n\n\n"
+page_break    = "\n__page_break__\n"
+
+pre_extras.each { |f|
+  extra_file_name = extra_dir + '/' + f + '.txt'
+  if File.file? extra_file_name
+    ex  = File.read(extra_file_name)
+    ex.strip!
+    File.open(book_file, "a+") { |f|
+      f.write(page_break)
+      f.write(ex)
+    }
+  end
+}
+      
+scene_files.each do |scene_file|
+  if scene_file.end_with?('.txt')
+    scene = File.read("#{scene_dir}/#{scene_file}")
+    scene.strip!
+
+    chapter_count_padded = "%03d" % [chapter_count]
+    File.open("#{chapter_dir}/Chapter_#{chapter_count_padded}", "w") { |file|
+      file.write(scene)
+    }
+
+    File.open(book_file, "a+") { |file|
+      file.write(page_break)
+      if chapter_count == 0
+        file.write("Prologue\n")
+      else
+        file.write("Chapter #{chapter_count_padded}\n")
+      end
+      file.write(header_space)
+      file.write(scene)
+    }
+    chapter_count += 1
+  end
+end
+
+
+post_extras.each { |f|
+  extra_file_name = extra_dir + '/' + f + '.txt'
+  if File.file? extra_file_name
+    ex  = File.read(extra_file_name)
+    ex.strip!
+    File.open(book_file, "a+") { |f|
+      f.write(page_break)
+      f.write(ex)
+    }
+  end
+}
