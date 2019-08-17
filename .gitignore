@@ -48,3 +48,14 @@ build-iPhoneSimulator/
 
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
+# LibreOffice lock files.
+.~lock.*
+
+# Active vi sessions.
+*.swp
+*.swo
+
+# Created files
+book/
+chapters/
+total/
