@@ -21,7 +21,7 @@ chapter_dir = 'chapters'
 extra_dir   = 'extras'
 scene_dir   = 'scenes'
 pre_extras  = ['title_page', 'dedication']
-post_extras = ['notes', 'afterward', 'author_bio']
+post_extras = ['notes', 'afterward', 'author_bio', 'epilogue']
 oggi        = Time.now.strftime("%Y%j")
 this_dir    = Dir.pwd.split('/')[-1]
 

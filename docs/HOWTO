@@ -38,7 +38,10 @@ Process
     2.3.  Format -> Font -> Style -> Bold
     2.4.  Replace:  &
     2.5.  Replace All
-    2.6.  Close
+    2.6.  Repeat for "Prologue", "Epilogue", "Afterward", 
+          and "Insider Information".
+    2.7.  Close
+    2.8.  Manually Bold and alter size on the Title and Dedication pages.
 
   3.      To make the Time_Location headers bold.
     3.1.  Edit -> Find and Replace
@@ -47,5 +50,10 @@ Process
     3.4.  Replace:  &
     3.5.  Replace All
     3.6.  Close
+
+  4.      To select a font not on the list
+    4.1.  Use either Garamond or Palatino
+    4.2.  Ctrl-a to select all.
+    4.3.  Type in the font name in the font entry.
 
 
