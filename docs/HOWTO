@@ -38,19 +38,21 @@ Process
     2.3.  Replace:  &
     2.4.  Format -> Font -> Style -> Bold
             OK
-    2.5.  Replace All
-    2.6.  Repeat for "Glossary", "Prologue", "Epilogue", "Afterward", 
+    2.5.  Ensure "Regular Expressions" box is checked.
+    2.6.  Replace All
+    2.7.  Repeat for "Glossary", "Prologue", "Epilogue", "Afterward", 
           and "Insider Information".
-    2.7.  Close
-    2.8.  Manually Bold and alter size on the Title and Dedication pages.
+    2.8.  Close
+    2.9.  Manually Bold and alter size on the Title and Dedication pages.
 
   3.      To make the Time_Location headers bold.
     3.1.  Edit -> Find and Replace
     3.2.  Find:     \[.*
     3.3.  Format -> Font -> Style -> Bold
     3.4.  Replace:  &
-    3.5.  Replace All
-    3.6.  Close
+    3.5.  Ensure "Regular Expressions" box is checked.
+    3.6.  Replace All
+    3.7.  Close
 
   4.      To select a font not on the list
     4.1.  Use either Garamond or Palatino
