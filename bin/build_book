@@ -11,7 +11,7 @@
 
 # TODO:
 #   Add other bits; dedication, afterward, author bio, etc.
-# Add -h help option.
+# Add option to have things out of order.
 
 require 'fileutils'
 require 'optparse'
@@ -88,7 +88,7 @@ else
 end
 
 book_file     = book_dir + '/' + book_name
-header_space  = "\n\n"
+header_space  = "\n"
 scene_space   = "\n\n\n\n\n"
 page_break    = "\n__page_break__\n"
 
@@ -117,9 +117,9 @@ scene_files.each do |scene_file|
     File.open(book_file, "a+") { |file|
       file.write(page_break)
       if chapter_count == 0
-        file.write("Prologue\n")
+        file.write("Prologue")
       else
-        file.write("Chapter #{chapter_count_padded}\n")
+        file.write("Chapter #{chapter_count_padded}")
       end
       file.write(header_space)
       file.write(scene)
