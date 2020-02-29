@@ -1,0 +1,5 @@
+#book_config.yml
+#
+scene_dir:    scenes
+book_dir:     book
+reports_dir:  reports

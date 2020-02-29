@@ -10,9 +10,10 @@
 #   TDW_1429_1_20180715 
 
 # TODO:
-#   Add other bits; dedication, afterward, author bio, etc.
+# Add other bits; dedication, afterward, author bio, etc.
 # Add option to have things out of order.
-
+# Add reports for long words, reading grade level.
+#
 require 'fileutils'
 require 'optparse'
 
@@ -97,6 +98,8 @@ pre_extras.each { |f|
   if File.file? extra_file_name
     ex  = File.read(extra_file_name)
     ex.strip!
+    ex_array = ex.split(" ")
+    puts "there are #{ex_array.length} words in #{extra_file_name}"
     File.open(book_file, "a+") { |f|
       f.write(page_break)
       f.write(ex)
@@ -108,6 +111,8 @@ scene_files.each do |scene_file|
   if scene_file.end_with?('.txt')
     scene = File.read("#{scene_dir}/#{scene_file}")
     scene.strip!
+    scene_array = scene.split(" ")
+    puts "there are #{scene_array.length} words in #{scene_file}"
 
     chapter_count_padded = "%03d" % [chapter_count]
     File.open("#{chapter_dir}/Chapter_#{chapter_count_padded}", "w") { |file|

@@ -1,0 +1,392 @@
+01.01_wilbur 
+-----------------
+
+	 Grade level: 3.2 
+	 Avg Word Length: 4.1 
+	 Contractions: 0 
+	 Total words: 1320 
+
+01.02_wilbur 
+-----------------
+
+	 Grade level: 2.3 
+	 Avg Word Length: 4.0 
+	 Contractions: 0 
+	 Total words: 719 
+
+02.01_gray 
+-----------------
+
+	 Grade level: 3.9 
+	 Avg Word Length: 4.2 
+	 Contractions: 0 
+	 Total words: 2113 
+
+03.01_jo 
+-----------------
+
+	 Grade level: 3.6 
+	 Avg Word Length: 4.1 
+	 Contractions: 0 
+	 Total words: 532 
+
+03.02_jo 
+-----------------
+
+	 Grade level: 3.2 
+	 Avg Word Length: 4.1 
+	 Contractions: 0 
+	 Total words: 1522 
+
+04.01_mon 
+-----------------
+
+	 Grade level: 3.8 
+	 Avg Word Length: 4.2 
+	 Contractions: 0 
+	 Total words: 1201 
+
+04.02_mon 
+-----------------
+
+	 Grade level: 3.0 
+	 Avg Word Length: 4.2 
+	 Contractions: 0 
+	 Total words: 1075 
+
+05.01_al 
+-----------------
+
+	 Grade level: 3.7 
+	 Avg Word Length: 4.0 
+	 Contractions: 0 
+	 Total words: 875 
+
+05.02_al 
+-----------------
+
+	 Grade level: 3.5 
+	 Avg Word Length: 4.2 
+	 Contractions: 0 
+	 Total words: 2464 
+
+06.01_team_meeting 
+-----------------
+
+	 Grade level: 4.7 
+	 Avg Word Length: 4.2 
+	 Contractions: 0 
+	 Total words: 844 
+
+06.02_team_meeting 
+-----------------
+
+	 Grade level: 4.0 
+	 Avg Word Length: 4.4 
+	 Contractions: 0 
+	 Total words: 703 
+
+06.03_team_meeting 
+-----------------
+
+	 Grade level: 3.0 
+	 Avg Word Length: 4.3 
+	 Contractions: 0 
+	 Total words: 1118 
+
+06.04_team_meeting 
+-----------------
+
+	 Grade level: 1.3 
+	 Avg Word Length: 4.0 
+	 Contractions: 0 
+	 Total words: 269 
+
+07.01_steel_port 
+-----------------
+
+	 Grade level: 3.2 
+	 Avg Word Length: 4.3 
+	 Contractions: 0 
+	 Total words: 1355 
+
+07.02_steel_port 
+-----------------
+
+	 Grade level: 2.8 
+	 Avg Word Length: 4.2 
+	 Contractions: 0 
+	 Total words: 761 
+
+08.01_captured 
+-----------------
+
+	 Grade level: 3.8 
+	 Avg Word Length: 4.2 
+	 Contractions: 0 
+	 Total words: 1076 
+
+08.02_captured 
+-----------------
+
+	 Grade level: 3.2 
+	 Avg Word Length: 4.1 
+	 Contractions: 0 
+	 Total words: 932 
+
+09.01_captain_vigeron 
+-----------------
+
+	 Grade level: 3.4 
+	 Avg Word Length: 4.4 
+	 Contractions: 0 
+	 Total words: 471 
+
+09.02_captain_vigeron 
+-----------------
+
+	 Grade level: 3.9 
+	 Avg Word Length: 4.2 
+	 Contractions: 0 
+	 Total words: 1549 
+
+10.01_brig 
+-----------------
+
+	 Grade level: 2.1 
+	 Avg Word Length: 4.0 
+	 Contractions: 0 
+	 Total words: 2011 
+
+11.01_illegal_fights 
+-----------------
+
+	 Grade level: 2.5 
+	 Avg Word Length: 4.1 
+	 Contractions: 0 
+	 Total words: 1461 
+
+11.02_illegal_fights 
+-----------------
+
+	 Grade level: 3.0 
+	 Avg Word Length: 4.1 
+	 Contractions: 0 
+	 Total words: 597 
+
+12.01_parents 
+-----------------
+
+	 Grade level: 5.6 
+	 Avg Word Length: 4.4 
+	 Contractions: 0 
+	 Total words: 1075 
+
+12.02_parents 
+-----------------
+
+	 Grade level: 4.5 
+	 Avg Word Length: 4.5 
+	 Contractions: 0 
+	 Total words: 1159 
+
+13.01_bilge_rat 
+-----------------
+
+	 Grade level: 4.5 
+	 Avg Word Length: 4.2 
+	 Contractions: 0 
+	 Total words: 2691 
+
+14.01_mister_lefron 
+-----------------
+
+	 Grade level: 2.9 
+	 Avg Word Length: 4.1 
+	 Contractions: 0 
+	 Total words: 1200 
+
+14.02_mister_lefron 
+-----------------
+
+	 Grade level: 2.6 
+	 Avg Word Length: 4.2 
+	 Contractions: 0 
+	 Total words: 967 
+
+15.01_contact 
+-----------------
+
+	 Grade level: 3.7 
+	 Avg Word Length: 4.1 
+	 Contractions: 0 
+	 Total words: 2142 
+
+16.01_friends 
+-----------------
+
+	 Grade level: 2.0 
+	 Avg Word Length: 4.2 
+	 Contractions: 0 
+	 Total words: 738 
+
+16.02_friends 
+-----------------
+
+	 Grade level: 2.3 
+	 Avg Word Length: 4.1 
+	 Contractions: 0 
+	 Total words: 1296 
+
+17.01_fear 
+-----------------
+
+	 Grade level: 2.8 
+	 Avg Word Length: 4.1 
+	 Contractions: 0 
+	 Total words: 858 
+
+17.02_fear 
+-----------------
+
+	 Grade level: 2.7 
+	 Avg Word Length: 4.1 
+	 Contractions: 0 
+	 Total words: 904 
+
+17.03_fear 
+-----------------
+
+	 Grade level: 2.9 
+	 Avg Word Length: 4.2 
+	 Contractions: 0 
+	 Total words: 294 
+
+18.01_challenge 
+-----------------
+
+	 Grade level: 2.5 
+	 Avg Word Length: 4.1 
+	 Contractions: 0 
+	 Total words: 743 
+
+18.02_challenge 
+-----------------
+
+	 Grade level: 3.7 
+	 Avg Word Length: 4.2 
+	 Contractions: 0 
+	 Total words: 1259 
+
+19.01_chief_engineer_desoto 
+-----------------
+
+	 Grade level: 4.4 
+	 Avg Word Length: 4.3 
+	 Contractions: 0 
+	 Total words: 1137 
+
+19.02_chief_engineer_desoto 
+-----------------
+
+	 Grade level: 2.8 
+	 Avg Word Length: 4.0 
+	 Contractions: 0 
+	 Total words: 857 
+
+20.01_wilbur_fights 
+-----------------
+
+	 Grade level: 4.5 
+	 Avg Word Length: 4.2 
+	 Contractions: 0 
+	 Total words: 2038 
+
+21.01_mon_swims 
+-----------------
+
+	 Grade level: 4.3 
+	 Avg Word Length: 4.1 
+	 Contractions: 0 
+	 Total words: 1455 
+
+22.01_duel 
+-----------------
+
+	 Grade level: 4.6 
+	 Avg Word Length: 4.2 
+	 Contractions: 0 
+	 Total words: 1223 
+
+22.02_duel 
+-----------------
+
+	 Grade level: 2.6 
+	 Avg Word Length: 4.2 
+	 Contractions: 0 
+	 Total words: 850 
+
+23.01_jo_flies 
+-----------------
+
+	 Grade level: 2.9 
+	 Avg Word Length: 4.1 
+	 Contractions: 0 
+	 Total words: 1202 
+
+23.02_jo_flies 
+-----------------
+
+	 Grade level: 2.9 
+	 Avg Word Length: 4.2 
+	 Contractions: 0 
+	 Total words: 1207 
+
+24.01_captain_al 
+-----------------
+
+	 Grade level: 5.0 
+	 Avg Word Length: 4.3 
+	 Contractions: 0 
+	 Total words: 332 
+
+24.02_captain_al 
+-----------------
+
+	 Grade level: 4.3 
+	 Avg Word Length: 4.3 
+	 Contractions: 1 
+	 Total words: 885 
+
+24.03_captain_al 
+-----------------
+
+	 Grade level: 4.5 
+	 Avg Word Length: 4.2 
+	 Contractions: 0 
+	 Total words: 217 
+
+25.01_return 
+-----------------
+
+	 Grade level: 3.5 
+	 Avg Word Length: 4.2 
+	 Contractions: 0 
+	 Total words: 548 
+
+25.02_return 
+-----------------
+
+	 Grade level: 4.6 
+	 Avg Word Length: 4.3 
+	 Contractions: 0 
+	 Total words: 1577 
+
+25.03_return 
+-----------------
+
+	 Grade level: 6.6 
+	 Avg Word Length: 4.5 
+	 Contractions: 0 
+	 Total words: 234 
+
