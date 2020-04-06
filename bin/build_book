@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 
-# build_book [-t <TITLE>, -p]
+# build_book 
  
-# Assumes scenes in scene_dir are ordered.
+# Assumes scenes in section_dir are ordered.
 # If TITLE given writes book/<TITLE>, otherwise TITLE is 
-# the current working directory (uppercare) appended with an 
+# the current working directory (uppercase) appended with an 
 # underscore and an ISO 8601 compliant date string in YYYYMMDD format.
 # For example, running this in tdw_1429_1 on 15 Jul 2018 gives:
 #   TDW_1429_1_20180715 
@@ -13,21 +13,24 @@
 # Add other bits; dedication, afterward, author bio, etc.
 # Add option to have things out of order.
 # Add reports for long words, reading grade level.
+# Add configfile (IN PROCESS)
 #
 require 'fileutils'
 require 'optparse'
+require 'psych'
 
-book_dir    = 'book'
-chapter_dir = 'chapters'
-extra_dir   = 'extras'
-scene_dir   = 'scenes'
-pre_extras  = ['title_page', 'dedication', 'glossary']
-post_extras = ['insider_information', 'afterward', 'author_bio', 'epilogue']
-oggi        = Time.now.strftime("%Y%j")
-this_dir    = Dir.pwd.split('/')[-1]
+defaults = {
+  :book_dir     => 'book',
+  :config_file  => 'book_config.yml',
+  :chapter_dir  => 'chapters',
+  :extra_dir    => 'extras',
+  :pre_extras   => ['title_page', 'dedication', 'glossary'],
+  :post_extras  => ['insider_information', 'afterward', 'author_bio', 'epilogue'],
+  :section_dir  => 'sections',
+}
 
 def make_title(options)
-  if options[:title] == 0
+  if options[:title].nil?
     book_name_base = [options[:this_dir].upcase, options[:today]].join('_')
   else
     book_name_base = options[:title]
@@ -36,6 +39,7 @@ def make_title(options)
   book_name = book_name_base.gsub(/[\W]/, '')
 end
 
+# Is this even required?
 def usage
   cmd = File.basename($PROGRAM_NAME) 
   puts "#{cmd} [ -t <title> ] [ -p ] [ -h ]"
@@ -44,48 +48,55 @@ def usage
   puts "\t -h           # Help menu"
 end
 
-options             = Hash.new(0)
+options             = Hash.new
 options[:this_dir]  = Dir.pwd.split('/')[-1]
 options[:today]     = Time.now.strftime("%Y%m%d")
 
 option_parser = OptionParser.new do |opts|
-  opts.on('-t', '--title TITLE', 'Title of the book') do |t|
-    options[:title] = t
+  opts.on('-c CONFIG', '--config', 'Configuration file') do |c|
+    options[:config_file] = c
   end
-  opts.on('-p', '--prologue', 'Book has a prologue') do 
-    options[:prologue] = true
+  opts.on('-s SECTION_DIR', '--sections', 'Where the sections are') do |s|
+    options[:section_dir] = s 
   end
   opts.on('-h', '--help', 'Help menu') do
     usage
     exit
   end
+  opts.on('-t TITLE', '--title', 'Title of the book') do |t|
+    options[:title] = t
+  end
 end
 option_parser.parse!
 
-book_name = make_title(options)
+if options.has_key?(:config_file) and File.readable?(options[:config_file])
+  configs   = Psych.load_file(options[:config_file])
+elsif File.readable?(defaults[:config_file])
+  configs   = Psych.load_file(defaults[:config_file])
+end
+
+defaults.merge!(configs) if configs
+defaults.merge!(options)
+defaults.transform_keys! { |k| k.to_sym }
+
+book_name   = make_title(defaults)
+book_dir    = defaults[:book_dir]
+section_dir = defaults[:section_dir]
+extra_dir   = defaults[:extra_dir]
+pre_extras  = defaults[:pre_extras]
+post_extras = defaults[:post_extras]
 
 if File.directory?(book_dir)
   FileUtils.rm_rf(book_dir)
 end
 Dir.mkdir(book_dir)
 
-if File.directory?(chapter_dir)
-  FileUtils.rm_rf(chapter_dir)
-end
-Dir.mkdir(chapter_dir)
-
-if File.directory?(scene_dir)
-  scene_files = Dir.entries(scene_dir)
-  scene_files.sort!
+if File.directory?(section_dir)
+  section_files = Dir.entries(section_dir)
+  section_files.sort!
 else
-  puts("Need scenes.")
+  puts("Need sections.")
   exit
-end
-
-if options[:prologue] == true
-  chapter_count = 0
-else
-  chapter_count = 1
 end
 
 book_file     = book_dir + '/' + book_name
@@ -99,7 +110,6 @@ pre_extras.each { |f|
     ex  = File.read(extra_file_name)
     ex.strip!
     ex_array = ex.split(" ")
-    puts "there are #{ex_array.length} words in #{extra_file_name}"
     File.open(book_file, "a+") { |f|
       f.write(page_break)
       f.write(ex)
@@ -107,32 +117,24 @@ pre_extras.each { |f|
   end
 }
       
-scene_files.each do |scene_file|
-  if scene_file.end_with?('.txt')
-    scene = File.read("#{scene_dir}/#{scene_file}")
-    scene.strip!
-    scene_array = scene.split(" ")
-    puts "there are #{scene_array.length} words in #{scene_file}"
-
+chapter_count = 1
+section_files.each do |section_file|
+  if section_file.end_with?('.txt')
+    section = File.read("#{section_dir}/#{section_file}")
+    section.strip!
+    section_array = section.split(" ")
     chapter_count_padded = "%03d" % [chapter_count]
-    File.open("#{chapter_dir}/Chapter_#{chapter_count_padded}", "w") { |file|
-      file.write(scene)
-    }
 
+    ## ?? Why is each chapter opening the book file?
     File.open(book_file, "a+") { |file|
       file.write(page_break)
-      if chapter_count == 0
-        file.write("Prologue")
-      else
-        file.write("Chapter #{chapter_count_padded}")
-      end
+      file.write("Chapter #{chapter_count_padded}")
       file.write(header_space)
-      file.write(scene)
+      file.write(section)
     }
     chapter_count += 1
   end
 end
-
 
 post_extras.each { |f|
   extra_file_name = extra_dir + '/' + f + '.txt'
@@ -145,3 +147,4 @@ post_extras.each { |f|
     }
   end
 }
+
