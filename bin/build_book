@@ -15,7 +15,9 @@ $VERBOSE = true
 # Add option to have things out of order.
 # Add reports for long words, reading grade level.
 # Add configfile (IN PROCESS)
+# Fix the stupid smart quotes and other non-ASCII characters.
 #
+
 require 'fileutils'
 require 'optparse'
 require 'psych'
@@ -45,6 +47,9 @@ options[:this_dir]  = Dir.pwd.split('/')[-1]
 options[:today]     = Time.now.strftime("%Y%m%d")
 
 option_parser = OptionParser.new do |opts|
+  opts.on('-b BOOK_DIR', '--book', 'Output directory for the book') do |b|
+    options[:book_dir] = b
+  end
   opts.on('-c CONFIG', '--config', 'Configuration file') do |c|
     options[:config_file] = c
   end
@@ -63,10 +68,12 @@ elsif File.readable?(defaults[:config_file])
   configs   = Psych.load_file(defaults[:config_file])
 end
 
-defaults.merge!(configs) if configs
-defaults.merge!(options)
-defaults.transform_keys! { |k| k.to_sym }   # This is from Ruby 2.5!
-
+[configs, options].each { |h|
+  if h.count > 0
+    h.transform_keys! { |k| k.to_sym }
+    defaults.merge!(h)
+  end
+}
 
 book_name   = make_title(defaults)
 book_dir    = defaults[:book_dir]
@@ -74,6 +81,11 @@ section_dir = defaults[:section_dir]
 extra_dir   = defaults[:extra_dir]
 pre_extras  = defaults[:pre_extras]
 post_extras = defaults[:post_extras]
+
+book_file     = book_dir + '/' + book_name
+header_space  = "\n"
+scene_space   = "\n\n\n\n\n"
+page_break    = "\n__page_break__\n"
 
 if File.directory?(book_dir)
   FileUtils.rm_rf(book_dir)
@@ -88,17 +100,18 @@ else
   exit
 end
 
-book_file     = book_dir + '/' + book_name
-header_space  = "\n"
-scene_space   = "\n\n\n\n\n"
-page_break    = "\n__page_break__\n"
+# Take a file path to write to the book.
+# File must end in ".txt"
+def clean_section(section)
+  data = File.read(section)
+  data.strip!
+  data
+end
 
 pre_extras.each { |f|
   extra_file_name = extra_dir + '/' + f + '.txt'
   if File.file? extra_file_name
-    ex  = File.read(extra_file_name)
-    ex.strip!
-    ex_array = ex.split(" ")
+    data = clean_section(file_name)
     File.open(book_file, "a+") { |f|
       f.write(page_break)
       f.write(ex)
@@ -109,9 +122,7 @@ pre_extras.each { |f|
 chapter_count = 1
 section_files.each do |section_file|
   if section_file.end_with?('.txt')
-    section = File.read("#{section_dir}/#{section_file}")
-    section.strip!
-    section_array = section.split(" ")
+    data = clean_section("#{section_dir}/#{section_file}")
     chapter_count_padded = "%03d" % [chapter_count]
 
     ## ?? Why is each chapter opening the book file?
@@ -119,7 +130,7 @@ section_files.each do |section_file|
       file.write(page_break)
       file.write("Chapter #{chapter_count_padded}")
       file.write(header_space)
-      file.write(section)
+      file.write(data)
     }
     chapter_count += 1
   end
@@ -128,11 +139,10 @@ end
 post_extras.each { |f|
   extra_file_name = extra_dir + '/' + f + '.txt'
   if File.file? extra_file_name
-    ex  = File.read(extra_file_name)
-    ex.strip!
+    data  = clean_section(extra_file_name)
     File.open(book_file, "a+") { |f|
       f.write(page_break)
-      f.write(ex)
+      f.write(data)
     }
   end
 }
