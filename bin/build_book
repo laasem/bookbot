@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+$VERBOSE = true
 
 # build_book 
  
@@ -29,23 +30,14 @@ defaults = {
   :section_dir  => 'sections',
 }
 
-def make_title(options)
-  if options[:title].nil?
-    book_name_base = [options[:this_dir].upcase, options[:today]].join('_')
+def make_title(defaults)
+  if defaults[:title].nil?
+    book_name_base = [defaults[:this_dir].upcase, defaults[:today]].join('_')
   else
-    book_name_base = options[:title]
+    book_name_base = defaults[:title]
   end
   book_name_base.gsub!(/ /, '_')
   book_name = book_name_base.gsub(/[\W]/, '')
-end
-
-# Is this even required?
-def usage
-  cmd = File.basename($PROGRAM_NAME) 
-  puts "#{cmd} [ -t <title> ] [ -p ] [ -h ]"
-  puts "\t -t <title>   # The title"
-  puts "\t -p           # Has a prologue"
-  puts "\t -h           # Help menu"
 end
 
 options             = Hash.new
@@ -58,10 +50,6 @@ option_parser = OptionParser.new do |opts|
   end
   opts.on('-s SECTION_DIR', '--sections', 'Where the sections are') do |s|
     options[:section_dir] = s 
-  end
-  opts.on('-h', '--help', 'Help menu') do
-    usage
-    exit
   end
   opts.on('-t TITLE', '--title', 'Title of the book') do |t|
     options[:title] = t
@@ -77,7 +65,8 @@ end
 
 defaults.merge!(configs) if configs
 defaults.merge!(options)
-defaults.transform_keys! { |k| k.to_sym }
+defaults.transform_keys! { |k| k.to_sym }   # This is from Ruby 2.5!
+
 
 book_name   = make_title(defaults)
 book_dir    = defaults[:book_dir]
