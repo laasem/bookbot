@@ -1,6 +1,6 @@
 # ftl_book.rb
 #
-require "ftl_book/scene"
+require "ftl_book/section"
 
 module FTLBook
 end

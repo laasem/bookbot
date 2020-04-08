@@ -1,8 +1,8 @@
 # scene.rb
 #
 module FTLBook
-  class Scene
- 
+  class Section
+
     attr_accessor :title
      
     def initialize(file)
