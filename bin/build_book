@@ -83,7 +83,7 @@ pre_extras  = defaults[:pre_extras]
 post_extras = defaults[:post_extras]
 
 book_file     = book_dir + '/' + book_name
-header_space  = "\n"
+header_space  = "\n\n"
 scene_space   = "\n\n\n\n\n"
 page_break    = "\n__page_break__\n"
 
