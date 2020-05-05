@@ -22,6 +22,9 @@ require 'fileutils'
 require 'optparse'
 require 'psych'
 
+$LOAD_PATH << File.expand_path('../lib', __dir__)
+require 'ftl_book'
+
 defaults = {
   :book_dir     => 'book',
   :config_file  => 'book_config.yml',
@@ -30,6 +33,7 @@ defaults = {
   :pre_extras   => ['title_page', 'dedication', 'glossary'],
   :post_extras  => ['insider_information', 'afterward', 'author_bio', 'epilogue'],
   :section_dir  => 'sections',
+  :scrubbed_dir => 'scrubbed',
 }
 
 def make_title(defaults)
@@ -75,12 +79,13 @@ end
   end
 }
 
-book_name   = make_title(defaults)
-book_dir    = defaults[:book_dir]
-section_dir = defaults[:section_dir]
-extra_dir   = defaults[:extra_dir]
-pre_extras  = defaults[:pre_extras]
-post_extras = defaults[:post_extras]
+book_name     = make_title(defaults)
+book_dir      = defaults[:book_dir]
+section_dir   = defaults[:section_dir]
+extra_dir     = defaults[:extra_dir]
+scrubbed_dir  = defaults[:scrubbed_dir]
+pre_extras    = defaults[:pre_extras]
+post_extras   = defaults[:post_extras]
 
 book_file     = book_dir + '/' + book_name
 header_space  = "\n\n"
@@ -100,6 +105,10 @@ else
   exit
 end
 
+unless File.directory?(scrubbed_dir)
+  Dir.mkdir(scrubbed_dir)
+end
+
 # Take a file path to write to the book.
 # File must end in ".txt"
 def clean_section(section)
@@ -109,12 +118,12 @@ def clean_section(section)
 end
 
 pre_extras.each { |f|
-  extra_file_name = extra_dir + '/' + f + '.txt'
-  if File.file? extra_file_name
-    data = clean_section(file_name)
+  file_name = extra_dir + '/' + f + '.txt'
+  if File.file? file_name
+    section = FTLBook::Section.new(file_name)
     File.open(book_file, "a+") { |f|
       f.write(page_break)
-      f.write(ex)
+      f.write(section.to_s)
     }
   end
 }
@@ -122,7 +131,7 @@ pre_extras.each { |f|
 chapter_count = 1
 section_files.each do |section_file|
   if section_file.end_with?('.txt')
-    data = clean_section("#{section_dir}/#{section_file}")
+    section = FTLBook::Section.new("#{section_dir}/#{section_file}")
     chapter_count_padded = "%03d" % [chapter_count]
 
     ## ?? Why is each chapter opening the book file?
@@ -130,19 +139,26 @@ section_files.each do |section_file|
       file.write(page_break)
       file.write("Chapter #{chapter_count_padded}")
       file.write(header_space)
-      file.write(data)
+      file.write(section.to_s)
     }
     chapter_count += 1
+
+    ## Write the scrubbed version.
+    scrubbed_file = "#{scrubbed_dir}/#{section_file}"
+    File.open(scrubbed_file, "w") { |file|
+      file.write(section.to_s)
+    }
+
   end
 end
 
 post_extras.each { |f|
-  extra_file_name = extra_dir + '/' + f + '.txt'
-  if File.file? extra_file_name
-    data  = clean_section(extra_file_name)
+  file_name = extra_dir + '/' + f + '.txt'
+  if File.file? file_name
+    section = FTLBook::Section.new(file_name)
     File.open(book_file, "a+") { |f|
       f.write(page_break)
-      f.write(data)
+      f.write(section.to_s)
     }
   end
 }

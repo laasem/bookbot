@@ -8,8 +8,10 @@ module FTLBook
     def initialize(file)
       @file       = file
       slurp_file
-      working_string = @file_string.clone
-      scrub_string(working_string)
+      ascii_scrub 
+
+      # Report stuff
+      report_scrub_string(@file_string.clone)
       count_words
       count_sentences
       count_syllables
@@ -31,7 +33,26 @@ module FTLBook
       label
     end
 
-    def scrub_string(string)
+    #def has_bom?
+    #  @file_string.match(/^\uFEFF/)
+    #end
+
+    def ascii_scrub(string = @file_string)
+      string.gsub!(/\uFEFF/, '')    # BOM
+      string.gsub!(/\u2018/, "\'")  # Apos
+      string.gsub!(/\u2019/, "\'")  # Apos
+      string.gsub!(/\u0060/, "\'")  # Apos
+      string.gsub!(/\u00B4/, "\'")  # Apos
+      string.gsub!(/\u201C/, "\"")  # Double Quote
+      string.gsub!(/\u201D/, "\"")  # Double Quote
+      string
+    end
+
+    def to_s
+      @file_string.strip!
+    end
+
+    def report_scrub_string(string)
       string.gsub!(/n't/, ' ')
       string.gsub!(/'ll/, ' ')
       string.gsub!(/'s/, ' ')
