@@ -50,6 +50,7 @@ module FTLBook
 
     def to_s
       @file_string.strip!
+      @file_string
     end
 
     def report_scrub_string(string)

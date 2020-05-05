@@ -14,8 +14,8 @@ $VERBOSE = true
 # Add other bits; dedication, afterward, author bio, etc.
 # Add option to have things out of order.
 # Add reports for long words, reading grade level.
-# Add configfile (IN PROCESS)
-# Fix the stupid smart quotes and other non-ASCII characters.
+# Done: Add configfile.
+# Done: Fix the stupid smart quotes and other non-ASCII characters.
 #
 
 require 'fileutils'
