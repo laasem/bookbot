@@ -45,6 +45,7 @@ module FTLBook
       string.gsub!(/\u00B4/, "\'")  # Apos
       string.gsub!(/\u201C/, "\"")  # Double Quote
       string.gsub!(/\u201D/, "\"")  # Double Quote
+      string.gsub!(/\u2026/, "...") # Ellipsis
       string
     end
 
