@@ -70,6 +70,8 @@ if options.has_key?(:config_file) and File.readable?(options[:config_file])
   configs   = Psych.load_file(options[:config_file])
 elsif File.readable?(defaults[:config_file])
   configs   = Psych.load_file(defaults[:config_file])
+else
+  configs   = Hash.new
 end
 
 [configs, options].each { |h|
@@ -148,7 +150,8 @@ section_files.each do |section_file|
     File.open(scrubbed_file, "w") { |file|
       file.write(section.to_s)
     }
-
+  else
+      puts "Files need to end in .txt."
   end
 end
 
