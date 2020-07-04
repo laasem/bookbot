@@ -1,6 +1,6 @@
 # scene.rb
 #
-module FTLBook
+module BookBot
   class Section
 
     attr_accessor :title

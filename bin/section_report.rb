@@ -6,7 +6,7 @@ $VERBOSE = true
 #
 $LOAD_PATH << File.expand_path('../../lib', __FILE__)
 require 'yaml'
-require 'ftl_book'
+require 'bookbot'
 
 # Set defaults
 section_dir = 'my_sections'
@@ -28,7 +28,7 @@ search_sections = File.join(section_dir, '*.txt')
 filenames = Dir[search_sections]
 sections  = Hash.new
 filenames.each { |file|
-  section = FTLBook::Section.new(file)
+  section = BookBot::Section.new(file)
   section_name = section.file_name_label
   sections[section_name.to_sym] = section
 }

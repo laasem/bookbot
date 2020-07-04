@@ -1,11 +1,11 @@
 # section_spec.rb
 #
 #$LOAD_PATH << File.expand_path('../../lib', __FILE__)
-require 'ftl_book'
-module FTLBook
+require 'bookbot'
+module BookBot
   RSpec.describe 'A section' do
     test_file   = 'spec/data/test_section.txt'
-    let(:section) { FTLBook::Section.new(test_file) }
+    let(:section) { BookBot::Section.new(test_file) }
 
     it 'should count contractions' do
       # known issue with counting single quoted sentences, and 
@@ -18,7 +18,7 @@ module FTLBook
     #end
 
     it 'scrubs non-ASCII characters' do
-      scrub_test_section   = FTLBook::Section.new('spec/data/line_scene_bom_quotes.txt')
+      scrub_test_section   = BookBot::Section.new('spec/data/line_scene_bom_quotes.txt')
       fixed_line  = "\"With last year's pants,\" Wilbur chuckled. \"Didn't he used to wear old pants?\"" 
       expect(scrub_test_section.to_s).to match(fixed_line)
     end
@@ -41,7 +41,7 @@ module FTLBook
 
     it 'has a file_name_label' do
       odd_section_file_name = 'spec/data/Al and Jo talk.htmlpdq'
-      odd_section_file = FTLBook::Section.new(odd_section_file_name)
+      odd_section_file = BookBot::Section.new(odd_section_file_name)
       expect(odd_section_file.file_name_label).to eq('al_and_jo_talk')
     end
 
