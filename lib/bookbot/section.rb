@@ -3,7 +3,7 @@
 module BookBot
   class Section
 
-    attr_accessor :title
+    attr_accessor :chapter_number, :header, :title
      
     def initialize(file)
       @file       = file
@@ -17,6 +17,7 @@ module BookBot
       count_syllables
     end
 
+
     def slurp_file
       File.open(@file) { |f|
         @file_string = f.read
@@ -28,9 +29,10 @@ module BookBot
     end
      
     def file_name_label
-      label = file_name.gsub(/ /, "_")
+      label = file_name.gsub(/ /, "_").to_s
       label.gsub!(/[^a-z0-9_]/, "")
-      label
+      label = "_" +  label
+      label.to_sym
     end
 
     #def has_bom?
@@ -129,5 +131,10 @@ module BookBot
       level -= 15.59
       level.round(1) 
     end
+
+    def report
+      grade_level
+    end
+
   end
 end

@@ -32,6 +32,8 @@ defaults = {
   :extra_dir    => 'extras',
   :pre_extras   => ['title_page', 'dedication', 'glossary'],
   :post_extras  => ['insider_information', 'afterward', 'author_bio', 'epilogue'],
+  :report_dir   => 'reports',
+  :report_file  => 'report.txt',
   :section_dir  => 'sections',
   :scrubbed_dir => 'scrubbed',
 }
@@ -81,18 +83,23 @@ end
   end
 }
 
-book_name     = make_title(defaults)
-book_dir      = defaults[:book_dir]
-section_dir   = defaults[:section_dir]
-extra_dir     = defaults[:extra_dir]
-scrubbed_dir  = defaults[:scrubbed_dir]
-pre_extras    = defaults[:pre_extras]
-post_extras   = defaults[:post_extras]
+book_name       = make_title(defaults)
+book_dir        = defaults[:book_dir]
+book_file       = File.join(book_dir, book_name)
+extra_dir       = defaults[:extra_dir]
+post_extras     = defaults[:post_extras]
+pre_extras      = defaults[:pre_extras]
+report_dir      = defaults[:report_dir]
+report_file     = File.join(report_dir, defaults[:report_file])
+scrubbed_dir    = defaults[:scrubbed_dir]
+section_dir     = defaults[:section_dir]
 
-book_file     = book_dir + '/' + book_name
-header_space  = "\n\n"
-scene_space   = "\n\n\n\n\n"
-page_break    = "\n__page_break__\n"
+header_space    = "\n\n"
+scene_space     = "\n\n\n\n\n"
+page_break      = "\n__page_break__\n"
+
+sections        = Hash.new
+section_grades  = Hash.new
 
 if File.directory?(book_dir)
   FileUtils.rm_rf(book_dir)
@@ -100,7 +107,12 @@ end
 Dir.mkdir(book_dir)
 
 if File.directory?(section_dir)
-  section_files = Dir.entries(section_dir)
+  section_list  = Dir.entries(section_dir)
+  section_files = Array.new
+  section_list.each { |f| 
+    file_name = File.join(section_dir, f)
+    section_files << f unless File.directory?(file_name) 
+  }
   section_files.sort!
 else
   puts("Need sections.")
@@ -109,6 +121,10 @@ end
 
 unless File.directory?(scrubbed_dir)
   Dir.mkdir(scrubbed_dir)
+end
+
+unless File.directory?(report_dir)
+  Dir.mkdir(report_dir)
 end
 
 # Take a file path to write to the book.
@@ -123,10 +139,7 @@ pre_extras.each { |f|
   file_name = extra_dir + '/' + f + '.txt'
   if File.file? file_name
     section = BookBot::Section.new(file_name)
-    File.open(book_file, "a+") { |f|
-      f.write(page_break)
-      f.write(section.to_s)
-    }
+    sections[section.file_name_label] = section
   end
 }
       
@@ -134,35 +147,67 @@ chapter_count = 1
 section_files.each do |section_file|
   if section_file.end_with?('.txt')
     section = BookBot::Section.new("#{section_dir}/#{section_file}")
-    chapter_count_padded = "%03d" % [chapter_count]
-
-    ## ?? Why is each chapter opening the book file?
-    File.open(book_file, "a+") { |file|
-      file.write(page_break)
-      file.write("Chapter #{chapter_count_padded}")
-      file.write(header_space)
-      file.write(section.to_s)
-    }
+    section.chapter_number = chapter_count
     chapter_count += 1
-
+    sections[section.file_name_label] = section
+    
+    #grade   = sections[section.file_name_label.to_sym].grade_level.to_s.to_sym
+=begin     
     ## Write the scrubbed version.
     scrubbed_file = "#{scrubbed_dir}/#{section_file}"
     File.open(scrubbed_file, "w") { |file|
       file.write(section.to_s)
     }
+=end
   else
-      puts "Files need to end in .txt."
+    puts "File name is #{section_file}"
+    puts "Files need to end in .txt."
   end
+
 end
 
 post_extras.each { |f|
   file_name = extra_dir + '/' + f + '.txt'
   if File.file? file_name
     section = BookBot::Section.new(file_name)
-    File.open(book_file, "a+") { |f|
-      f.write(page_break)
-      f.write(section.to_s)
-    }
+    sections[section.file_name_label] = section
   end
+}
+
+# Write the book.
+## ?? Why is each chapter opening the book file?
+File.open(book_file, "a+") { |file|
+  sections.keys.each { |section|
+    file.write(page_break)
+    #chapter_count_padded = "%03d" % [chapter_count]
+    file.write("Chapter #{sections[section].chapter_number}") if sections[section].chapter_number
+    file.write(header_space)
+    file.write(sections[section].to_s)
+  }
+}
+
+by_grade = Hash.new
+File.open(report_file, "w") { |file|
+  sections.keys.each { |section|
+    grade     = sections[section].grade_level.to_s
+    by_grade[grade] = Array.new unless by_grade[grade]
+    by_grade[grade] << sections[section].file_name
+    file.print "%s \n" % sections[section].file_name
+    file.puts "-----------------"
+    file.print "\n\t Grade level: %.1f " % sections[section].grade_level
+    file.print "\n\t Avg Word Length: %.1f " % sections[section].average_word_length
+    file.print "\n\t Contractions: %d " % sections[section].contraction_count
+    file.print "\n\t Total words: %d " % sections[section].count_words
+    file.puts
+    file.puts
+  }
+
+
+  grades_reverse_sorted = by_grade.keys.sort.reverse
+  grades_reverse_sorted.each { |grade|
+    file.print "%s  : " % grade
+    string = by_grade[grade].join(", ")
+    file.puts string
+  }
 }
 
