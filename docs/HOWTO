@@ -48,15 +48,26 @@ Process
   3.      To make the Time_Location headers bold.
     3.1.  Edit -> Find and Replace
     3.2.  Find:     \[.*
-    3.3.  Format -> Font -> Style -> Bold
-    3.4.  Replace:  &
-    3.5.  Ensure "Regular Expressions" box is checked.
-    3.6.  Replace All
-    3.7.  Close
+    3.3.  Find All
+    3.4.  Format -> Font -> Style -> Bold
+    3.5.  Replace:  &
+    3.6.  Ensure "Regular Expressions" box is checked.
+    3.7.  Replace All
+    3.8.  Close
 
   4.      To select a font not on the list
-    4.1.  Use either Garamond or Palatino
+    4.1.  Use either Garamond or Palatino. Go with Palatino.
     4.2.  Ctrl-a to select all.
     4.3.  Type in the font name in the font entry.
+    4.4.  Select 12 for size.
+
+  5.      To add page numbers
+    5.1.  Format -> Page
+    5.2.  Page Style -> Footer
+    5.3.  Select "Footer on".
+    5.4.  Click the footer area of the first page.
+    5.5.  Insert -> Page Number 
+    5.6.  Select the number "1", and then click the "Align Center" formater.
+    5.7.  For font, select Palatino, and "14".
 
 
