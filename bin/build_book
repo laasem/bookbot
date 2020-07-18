@@ -151,14 +151,12 @@ section_files.each do |section_file|
     chapter_count += 1
     sections[section.file_name_label] = section
     
-    #grade   = sections[section.file_name_label.to_sym].grade_level.to_s.to_sym
-=begin     
+    grade   = sections[section.file_name_label.to_sym].grade_level.to_s.to_sym
     ## Write the scrubbed version.
     scrubbed_file = "#{scrubbed_dir}/#{section_file}"
     File.open(scrubbed_file, "w") { |file|
       file.write(section.to_s)
     }
-=end
   else
     puts "File name is #{section_file}"
     puts "Files need to end in .txt."
@@ -175,12 +173,10 @@ post_extras.each { |f|
 }
 
 # Write the book.
-## ?? Why is each chapter opening the book file?
 File.open(book_file, "a+") { |file|
   sections.keys.each { |section|
     file.write(page_break)
-    #chapter_count_padded = "%03d" % [chapter_count]
-    file.write("Chapter #{sections[section].chapter_number}") if sections[section].chapter_number
+    file.write("Chapter %03d" % sections[section].chapter_number) if sections[section].chapter_number
     file.write(header_space)
     file.write(sections[section].to_s)
   }
