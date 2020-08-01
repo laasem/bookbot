@@ -13,10 +13,6 @@ module BookBot
       expect(section.contraction_count).to eq(52)
     end
 
-    #it 'can tell if the file has a BOM' do
-    #  expect(section.has_bom?).to be_truthy
-    #end
-
     it 'scrubs non-ASCII characters' do
       scrub_test_section   = BookBot::Section.new('spec/data/line_scene_bom_quotes.txt')
       fixed_line  = "\"With last year's pants,\" Wilbur chuckled. \"Didn't he used to wear old pants?\"" 
@@ -36,7 +32,7 @@ module BookBot
     end
 
     it 'counts characters' do
-      expect(section.char_count).to eq(4290)
+      expect(section.char_count).to eq(4279)
     end
 
     it 'has a file_name_label' do
