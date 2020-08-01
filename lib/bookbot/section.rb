@@ -1,6 +1,7 @@
 # scene.rb
 #
 module BookBot
+
   class Section
 
     attr_accessor :chapter_number, :header, :title
@@ -9,14 +10,13 @@ module BookBot
       @file_name  = File.basename(file, '.*').downcase
       file_string = slurp_file(file)
       @string     = Tools.scrub(file_string) 
-
+      @report     = Tools.build_report(@string)
       # Report stuff
-      @clean_array = Tools.scrub(@string.clone, 'report')
-      count_words
-      count_sentences
-      count_syllables
+      #@clean_array = Tools.scrub(@string.clone, 'report')
+      #count_words
+      #count_sentences
+      #count_syllables
     end
-
 
     def slurp_file(file)
       file_string = ''
@@ -38,7 +38,7 @@ module BookBot
     end
 
     def char_count
-      @string.length
+      #@string.length
     end
    
     def count_sentences
@@ -84,7 +84,8 @@ module BookBot
 
     def contraction_count
       # this falsely reports single quoted strings, and possessives.
-      @string.count("'")
+      #@string.count("'")
+      @report[:contractions]
     end
 
     def grade_level

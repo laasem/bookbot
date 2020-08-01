@@ -8,9 +8,7 @@ module BookBot
     let(:section) { BookBot::Section.new(test_file) }
 
     it 'should count contractions' do
-      # known issue with counting single quoted sentences, and 
-      # possessives.
-      expect(section.contraction_count).to eq(52)
+      expect(section.contraction_count).to be(15)
     end
 
     it 'scrubs non-ASCII characters' do
