@@ -2,7 +2,7 @@
 #
 require "bookbot/section"
 require "bookbot/book"
-require "bookbot/tools"
+require "bookbot/analyzer"
 
 module BookBot
 end
