@@ -26,10 +26,10 @@ module BookBot
         string  = " We'll look at the stuff you have. It looks pretty? Really.   "
         data    = Analyzer.build_report(string)
         expect(data.class).to be(Hash)
-        expect(data[:chars]).to be(42)
+        expect(data[:character_count]).to be(58)
         expect(data[:string]).to eq('welookatthestuffyouhaveitlooksprettyreally')
         expect(data[:sentences]).to eq(3)
-        expect(data[:words]).to be(11)
+        expect(data[:word_count]).to be(11)
         expect(data[:avg_word_length]).to be(3.8)
         expect(data[:contractions]).to be(1)
       end

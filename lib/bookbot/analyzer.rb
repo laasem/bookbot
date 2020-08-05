@@ -10,41 +10,18 @@ module BookBot
       data                    = Hash.new
       data[:ascii]            = scrub(string)
       data[:arr_report]       = scrub(data[:ascii], 'report')
-      data[:chars]            = data[:arr_report].join('').length
+      # Just the scrubbed words, or everything?
+      #data[:character_count]  = data[:arr_report].join('').length
+      data[:character_count]  = data[:ascii].length
       data[:string]           = data[:arr_report].join('')
       data[:sentences]        = data[:ascii].count('.') + data[:ascii].count('?')
-      data[:words]            = data[:arr_report].length
+      data[:word_count]       = data[:arr_report].length
       data[:avg_word_length]  = average_word_length(data[:arr_report]) 
       data[:contractions]     = count_contractions(data[:ascii])
+      data[:syllables]        = count_syllables(data[:arr_report])
       data
     end
-    #module_function :build_report
 
-    def self.syllables_per_word(word)
-      count   = 0 
-      vowels  = "aeiouy"
-      if vowels.include?(word[0])
-        count += 1
-      end 
-      old_letter = ''
-      word.each_char.with_index { |letter, index|
-        if index == 0 
-          old_letter = letter
-          next
-        end   
-        if vowels.include?(letter)
-          count += 1 unless vowels.include?(old_letter) 
-        end
-        old_letter = letter
-      }   
-      count -= 1 if word.end_with?('e')
-      count = 1 if count < 1
-      count
-    end 
-
-    # Takes a string. If style is 'ascii' (default), returns an ASCII'd 
-    # version of the string, with leading and trailing whitespace removed.
-    # If style is 'report', returns an array with words in lower case.
     # Contractions and non-alpha characters have been removed.
     def self.scrub(str , style = 'ascii' )
       string = str.clone
@@ -108,14 +85,10 @@ module BookBot
     end
 
     def self.count_contractions(text)
-      apostrophes   = text.scan(/'/).count
-      possessives   = text.scan(/'s/).count
-      single_open   = text.scan(/ '/).count
-      single_close  = text.scan(/' /).count
-      single_close  += text.scan(/'\. /).count
-      single_close  += text.scan(/', /).count
-      single_close  += text.scan(/\.' /).count
-      apostrophes - possessives - single_open - single_close
+      contractions_raw  = text.scan(/[a-zI]'[a-z]/)
+      possessives       = text.scan(/[a-z]'s/)  # I's isn't an English word.
+      contractions      = contractions_raw - possessives
+      contractions.count
     end
 
     def self.count_syllables(clean_array)
@@ -125,7 +98,6 @@ module BookBot
       }   
       syllables
     end 
-
 
   end 
 end

@@ -8,7 +8,7 @@ module BookBot
     let(:section) { BookBot::Section.new(test_file) }
 
     it 'should count contractions' do
-      expect(section.contraction_count).to be(15)
+      expect(section.contraction_count).to be(20)
     end
 
     it 'scrubs non-ASCII characters' do
@@ -18,19 +18,15 @@ module BookBot
     end
 
     it 'should count sentences' do
-      expect(section.count_sentences).to eq(131)
+      expect(section.sentence_count).to eq(131)
     end
 
     it 'should count words' do
-      expect(section.count_words).to eq(781)
+      expect(section.word_count).to eq(781)
     end
 
     it 'should get an average word length' do
       expect(section.average_word_length).to eq(3.9)
-    end
-
-    it 'counts characters' do
-      expect(section.char_count).to eq(4279)
     end
 
     it 'has a file_name_label' do
@@ -45,7 +41,7 @@ module BookBot
     end
 
     it 'has a grade_level score' do
-      expect(section.grade_level).to eq(2.3)
+      expect(section.grade_level).to eq(1.9)
     end
 
     it 'removes the BOM' do
