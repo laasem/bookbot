@@ -46,6 +46,7 @@ module BookBot
     end
 
     it 'creates a text file' do
+      book.write_text
       expect(File.file?("output/the_life_and_death_of_al.txt")).to be_truthy
     end
 

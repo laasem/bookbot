@@ -93,18 +93,11 @@ report_dir      = defaults[:report_dir]
 report_file     = File.join(report_dir, defaults[:report_file])
 scrubbed_dir    = defaults[:scrubbed_dir]
 section_dir     = defaults[:section_dir]
-
-header_space    = "\n\n"
-scene_space     = "\n\n\n\n\n"
-page_break      = "\n__page_break__\n"
-
 sections        = Hash.new
-#section_grades  = Hash.new
 
-if File.directory?(book_dir)
-  FileUtils.rm_rf(book_dir)
-end
-Dir.mkdir(book_dir)
+[scrubbed_dir, report_dir, book_dir].each { |dir|
+  Dir.mkdir(dir) unless dir
+}
 
 if File.directory?(section_dir)
   section_list  = Dir.entries(section_dir)
@@ -119,22 +112,8 @@ else
   exit
 end
 
-unless File.directory?(scrubbed_dir)
-  Dir.mkdir(scrubbed_dir)
-end
-
-unless File.directory?(report_dir)
-  Dir.mkdir(report_dir)
-end
-
-# Take a file path to write to the book.
-# File must end in ".txt"
-#def clean_section(section)
-#  data = File.read(section)
-#  data.strip!
-#  data
-#end
-
+# Need to figure out how to put these three types together,
+# and deal with them better.
 pre_extras.each { |f|
   file_name = extra_dir + '/' + f + '.txt'
   if File.file? file_name
@@ -150,18 +129,10 @@ section_files.each do |section_file|
     section.chapter_number = chapter_count
     chapter_count += 1
     sections[section.file_name_label] = section
-    
-    #grade   = sections[section.file_name_label.to_sym].grade_level.to_s.to_sym
-    ### Write the scrubbed version.
-    #scrubbed_file = "#{scrubbed_dir}/#{section_file}"
-    #File.open(scrubbed_file, "w") { |file|
-    #  file.write(section.to_s)
-    #}
   else
     puts "File name is #{section_file}"
     puts "Files need to end in .txt."
   end
-
 end
 
 post_extras.each { |f|
@@ -172,7 +143,7 @@ post_extras.each { |f|
   end
 }
 
-data = Hash.new
+data              = Hash.new
 data[:title]      = defaults[:title]
 data[:pre]        = pre_extras
 data[:post]       = post_extras
@@ -180,40 +151,5 @@ data[:book_dir]   = book_dir
 data[:sections]   = sections
 
 book = BookBot::Book.new(data)
+book.write_text
 
-# Write the book.
-=begin
-File.open(book_file, "a+") { |file|
-  sections.keys.each { |section|
-    file.write(page_break)
-    file.write("Chapter %03d" % sections[section].chapter_number) if sections[section].chapter_number
-    file.write(header_space)
-    file.write(sections[section].to_s)
-  }
-}
-
-by_grade = Hash.new
-File.open(report_file, "w") { |file|
-  sections.keys.each { |section|
-    grade     = sections[section].grade_level.to_s
-    by_grade[grade] = Array.new unless by_grade[grade]
-    by_grade[grade] << sections[section].file_name
-    file.print "%s \n" % sections[section].file_name
-    file.puts "-----------------"
-    file.print "\n\t Grade level: %.1f " % sections[section].grade_level
-    file.print "\n\t Avg Word Length: %.1f " % sections[section].average_word_length
-    file.print "\n\t Contractions: %d " % sections[section].contraction_count
-    file.print "\n\t Total words: %d " % sections[section].count_words
-    file.puts
-    file.puts
-  }
-
-
-  grades_reverse_sorted = by_grade.keys.sort.reverse
-  grades_reverse_sorted.each { |grade|
-    file.print "%s  : " % grade
-    string = by_grade[grade].join(", ")
-    file.puts string
-  }
-}
-=end

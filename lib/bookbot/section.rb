@@ -1,4 +1,4 @@
-# scene.rb
+# section.rb
 #
 module BookBot
 
@@ -11,10 +11,6 @@ module BookBot
       file_string = slurp_file(file)
       @string     = Analyzer.scrub(file_string) 
       @analysis   = Analyzer.build_report(@string)
-    end
-
-    def word_count
-      @analysis[:words]
     end
 
     def slurp_file(file)
