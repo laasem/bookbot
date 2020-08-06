@@ -32,7 +32,7 @@ module BookBot
     it 'has a file_name_label' do
       odd_section_file_name = 'spec/data/Al and Jo talk.htmlpdq'
       odd_section_file = BookBot::Section.new(odd_section_file_name)
-      expect(odd_section_file.file_name_label).to eq(:_al_and_jo_talk)
+      expect(odd_section_file.file_name_label).to eq(:al_and_jo_talk)
     end
 
     it 'can accept a title' do
@@ -42,10 +42,6 @@ module BookBot
 
     it 'has a grade_level score' do
       expect(section.grade_level).to eq(1.9)
-    end
-
-    it 'removes the BOM' do
-
     end
 
   end

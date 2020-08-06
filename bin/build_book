@@ -99,7 +99,7 @@ scene_space     = "\n\n\n\n\n"
 page_break      = "\n__page_break__\n"
 
 sections        = Hash.new
-section_grades  = Hash.new
+#section_grades  = Hash.new
 
 if File.directory?(book_dir)
   FileUtils.rm_rf(book_dir)
@@ -129,11 +129,11 @@ end
 
 # Take a file path to write to the book.
 # File must end in ".txt"
-def clean_section(section)
-  data = File.read(section)
-  data.strip!
-  data
-end
+#def clean_section(section)
+#  data = File.read(section)
+#  data.strip!
+#  data
+#end
 
 pre_extras.each { |f|
   file_name = extra_dir + '/' + f + '.txt'
@@ -151,12 +151,12 @@ section_files.each do |section_file|
     chapter_count += 1
     sections[section.file_name_label] = section
     
-    grade   = sections[section.file_name_label.to_sym].grade_level.to_s.to_sym
-    ## Write the scrubbed version.
-    scrubbed_file = "#{scrubbed_dir}/#{section_file}"
-    File.open(scrubbed_file, "w") { |file|
-      file.write(section.to_s)
-    }
+    #grade   = sections[section.file_name_label.to_sym].grade_level.to_s.to_sym
+    ### Write the scrubbed version.
+    #scrubbed_file = "#{scrubbed_dir}/#{section_file}"
+    #File.open(scrubbed_file, "w") { |file|
+    #  file.write(section.to_s)
+    #}
   else
     puts "File name is #{section_file}"
     puts "Files need to end in .txt."
@@ -172,7 +172,17 @@ post_extras.each { |f|
   end
 }
 
+data = Hash.new
+data[:title]      = defaults[:title]
+data[:pre]        = pre_extras
+data[:post]       = post_extras
+data[:book_dir]   = book_dir
+data[:sections]   = sections
+
+book = BookBot::Book.new(data)
+
 # Write the book.
+=begin
 File.open(book_file, "a+") { |file|
   sections.keys.each { |section|
     file.write(page_break)
@@ -206,4 +216,4 @@ File.open(report_file, "w") { |file|
     file.puts string
   }
 }
-
+=end
