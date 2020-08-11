@@ -24,7 +24,6 @@ module BookBot
     def file_name_label
       label = @file_name.gsub(/ /, "_").to_s.downcase
       label.gsub!(/[^a-z0-9_]/, "")
-      #label = "_" +  label
       label.to_sym
     end
 
