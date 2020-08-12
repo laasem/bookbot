@@ -5,7 +5,7 @@ require 'bookbot'
 module BookBot
   RSpec.describe 'A section' do
     test_file   = 'spec/data/test_section.txt'
-    let(:section) { BookBot::Section.new( test_file, header = true ) }
+    let(:section) { BookBot::Section.new( test_file, true ) }
 
     it 'should count contractions' do
       expect(section.contraction_count).to be(20)
