@@ -21,15 +21,15 @@ module BookBot
       @sections.keys.to_s
     end
 
-    def make_filename
+    def make_filename(suffix)
       title = @title.clone
       title.gsub!(/ /, '_')
       title.gsub!(/[\W]/, '')
-      "#{@book_dir}/#{title.downcase}.txt"
+      "#{@book_dir}/#{title.downcase}.#{suffix}"
     end
 
     def write_text
-      book            =  make_filename
+      book            =  make_filename("txt")
       File.open(book, "w+") { |file|
         @sections.each_value { |sec|
           file.puts PAGE_BREAK
@@ -37,6 +37,15 @@ module BookBot
           file.puts("\n\n")
           file.puts sec.to_s
           file.puts
+        }
+      }
+    end
+
+    def write_latex
+      book    = make_filename("tex")
+      File.open(book, "w+") { |file|
+        @sections.each_value { |sec|
+          file.puts sec.to_s
         }
       }
     end

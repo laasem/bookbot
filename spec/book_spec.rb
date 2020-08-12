@@ -50,7 +50,10 @@ module BookBot
       expect(File.file?("output/the_life_and_death_of_al.txt")).to be_truthy
     end
 
-    it 'creates a LaTeX file' 
+    it 'creates a LaTeX file' do
+      book.write_latex
+      expect(File.file?("output/the_life_and_death_of_al.tex")).to be_truthy
+    end
 
   end
 end
