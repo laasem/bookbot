@@ -10,6 +10,7 @@ module BookBot
       @file_name  = File.basename(file, '.*').downcase
       file_string = slurp_file(file)
       @string     = Analyzer.scrub(file_string) 
+      set_header                    # Modifies @string to remove header.
       @analysis   = Analyzer.build_report(@string)
     end
 
@@ -25,6 +26,13 @@ module BookBot
       label = @file_name.gsub(/ /, "_").to_s.downcase
       label.gsub!(/[^a-z0-9_]/, "")
       label.to_sym
+    end
+
+    # Need a way to configure not doing this.
+    def set_header
+      @header = @string.split("\n")[0] 
+      @string.gsub!(@header, '')
+      @string.strip!
     end
 
     def to_s

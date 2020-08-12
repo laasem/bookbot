@@ -1,6 +1,6 @@
 # section_spec.rb
 #
-#$LOAD_PATH << File.expand_path('../../lib', __FILE__)
+
 require 'bookbot'
 module BookBot
   RSpec.describe 'A section' do
@@ -18,11 +18,11 @@ module BookBot
     end
 
     it 'should count sentences' do
-      expect(section.sentence_count).to eq(131)
+      expect(section.sentence_count).to eq(129)
     end
 
     it 'should count words' do
-      expect(section.word_count).to eq(781)
+      expect(section.word_count).to eq(777)
     end
 
     it 'should get an average word length' do
@@ -42,6 +42,11 @@ module BookBot
 
     it 'has a grade_level score' do
       expect(section.grade_level).to eq(1.9)
+    end
+
+    it 'has a header' do
+      expect(section.header).to match(/^\[14.*\] .*Hall$/)
+      expect(section.to_s).to match(/^The training/)
     end
 
   end
