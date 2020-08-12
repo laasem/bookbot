@@ -6,11 +6,11 @@ module BookBot
 
     attr_accessor :chapter_number, :header, :title
      
-    def initialize(file)
+    def initialize(file, header = false)
       @file_name  = File.basename(file, '.*').downcase
       file_string = slurp_file(file)
       @string     = Analyzer.scrub(file_string) 
-      set_header                    # Modifies @string to remove header.
+      set_header if header
       @analysis   = Analyzer.build_report(@string)
     end
 
