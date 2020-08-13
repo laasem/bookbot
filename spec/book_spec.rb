@@ -16,7 +16,10 @@ module BookBot
     }}
 
     # This doesn't set the chapter numbers. It has to be called.
-    let ( :set_chapters )  {  chapter_1.chapter_number = 1, chapter_2.chapter_number = 2 }
+    let ( :set_chapters )  {  
+      chapter_1.chapter_number = 1, chapter_2.chapter_number = 2,
+      chapter_1.set_header, chapter_2.set_header
+      }
 
     let ( :data ) { { 
       title:    "The Life and Death of Al",

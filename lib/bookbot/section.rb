@@ -30,6 +30,7 @@ module BookBot
 
     # Need a way to configure not doing this.
     def set_header
+      @string.strip!
       @header = @string.split("\n")[0] 
       @string.gsub!(@header, '')
       @string.strip!
