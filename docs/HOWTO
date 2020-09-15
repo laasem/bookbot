@@ -32,34 +32,35 @@ Process
           Replace All
           Close
 
-  2.      To make the Chapter headers bold.
-    2.1.  Edit -> Find and Replace
-    2.2.  Find:     Chapter [:digit:]{3}
-    2.3.  Replace:  &
-    2.4.  Format -> Font -> Style -> Bold
-            OK
-    2.5.  Ensure "Regular Expressions" box is checked.
-    2.6.  Replace All
-    2.7.  Repeat for "Glossary", "Prologue", "Epilogue", "Afterward", 
-          and "Insider Information".
-    2.8.  Close
-    2.9.  Manually Bold and alter size on the Title and Dedication pages.
+  2.      To select a font not on the list
+    2.1.  Use either Garamond or Palantino. Go with Palantino.
+    2.2.  Ctrl-a to select all.
+    2.3.  Type in the font name in the font entry.
+    2.4.  Select 10 for size.
 
-  3.      To make the Time_Location headers bold.
+  3.      To make the Chapter headers bold.
     3.1.  Edit -> Find and Replace
-    3.2.  Find:     \[.*
-    3.3.  Find All
+    3.2.  Find:     Chapter [:digit:]{3}
+    3.3.  Replace:  &
+      3.3.1.  Ensure the selection focus is here before proceeding.
     3.4.  Format -> Font -> Style -> Bold
-    3.5.  Replace:  &
-    3.6.  Ensure "Regular Expressions" box is checked.
-    3.7.  Replace All
+            OK
+    3.5.  Ensure "Regular Expressions" box is checked.
+    3.6.  Replace All
+    3.7.  Repeat for "Glossary", "Prologue", "Epilogue", "Afterward", 
+          and "Insider Information".
     3.8.  Close
+    3.9.  Manually Bold and alter size on the Title and Dedication pages.
 
-  4.      To select a font not on the list
-    4.1.  Use either Garamond or Palatino. Go with Palatino.
-    4.2.  Ctrl-a to select all.
-    4.3.  Type in the font name in the font entry.
-    4.4.  Select 12 for size.
+  4.      To make the Time_Location headers bold.
+    4.1.  Edit -> Find and Replace
+    4.2.  Find:     \[.*
+    4.3.  Find All
+    4.4.  Format -> Font -> Style -> Bold
+    4.5.  Replace:  &
+    4.6.  Ensure "Regular Expressions" box is checked.
+    4.7.  Replace All
+    4.8.  Close
 
   5.      To add page numbers
     5.1.  Format -> Page
@@ -68,6 +69,6 @@ Process
     5.4.  Click the footer area of the first page.
     5.5.  Insert -> Page Number 
     5.6.  Select the number "1", and then click the "Align Center" formater.
-    5.7.  For font, select Palatino, and "14".
+    5.7.  For font, select Palantino, and "10".
 
 
