@@ -28,7 +28,7 @@ module BookBot
       str = @title.clone
       str.downcase!
       str.gsub!(/ /, '_')
-      str.gsub!(/[^a-zA-z0-9_]/, "")
+      str.gsub!(/[^a-zA-Z0-9_]/, "")
       str
     end
 
