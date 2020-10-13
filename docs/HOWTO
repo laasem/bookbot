@@ -63,8 +63,8 @@ Process
     4.8.  Close
 
   5.      To add page numbers
-    5.1.  Format -> Page
-    5.2.  Page Style -> Footer
+    5.1.  Format -> Page Style
+    5.2.  Page -> Footer
     5.3.  Select "Footer on".
     5.4.  Click the footer area of the first page.
     5.5.  Insert -> Page Number 
