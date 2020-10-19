@@ -4,7 +4,7 @@ module BookBot
 
   class Section
 
-    attr_accessor :chapter_number, :header, :title
+    attr_accessor :chapter_number, :file_name, :header, :title
      
     def initialize(file, has_header = false)
       @file_name  = File.basename(file, '.*').downcase

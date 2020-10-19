@@ -48,7 +48,7 @@ File.open(per_section_report_file, 'w') { |file|
     file.print "\n\t Grade level: %.1f " % sections[section].grade_level
     file.print "\n\t Avg Word Length: %.1f " % sections[section].average_word_length
     file.print "\n\t Contractions: %d " % sections[section].contraction_count
-    file.print "\n\t Total words: %d " % sections[section].count_words
+    file.print "\n\t Total words: %d " % sections[section].word_count
     file.puts
     file.puts
   }

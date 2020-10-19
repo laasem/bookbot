@@ -22,11 +22,12 @@ module BookBot
       }
 
     let ( :data ) { { 
-      title:    "The Life and Death of Al",
-      pre:      [ 'prologue' ],
-      post:     [ 'epilogue' ],
-      book_dir: 'output',
-      sections: s_list,
+      title:      "The Life and Death of Al",
+      pre:        [ 'prologue' ],
+      post:       [ 'epilogue' ],
+      book_dir:   'output',
+      report_dir: 'reports',
+      sections:   s_list,
       } }
 
     let ( :book ) { set_chapters; BookBot::Book.new(data) }
@@ -57,6 +58,13 @@ module BookBot
       book.write_latex
       expect(File.file?("output/the_life_and_death_of_al.tex")).to be_truthy
     end
+
+=begin
+    it 'writes reports' do
+      book.write_reports
+      expect(File.file?("reports/report_per_section.txt")).to be_truthy
+    end
+=end
 
   end
 end

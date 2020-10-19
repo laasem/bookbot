@@ -13,6 +13,7 @@ module BookBot
       @pre          = data.fetch( :pre, Array.new )
       @post         = data.fetch( :post, Array.new )
       @book_dir     = data.fetch( :book_dir )
+      @report_dir   = data.fetch( :report_dir )
       @sections     = data.fetch( :sections )
       @section_list = generate_section_list
     end
@@ -29,7 +30,7 @@ module BookBot
     end
 
     def write_text
-      book            =  make_filename("txt")
+      book    =  make_filename("txt")
       File.open(book, "w+") { |file|
         @sections.each_value { |sec|
           file.puts PAGE_BREAK
@@ -53,6 +54,20 @@ module BookBot
       }
     end
 
+=begin
+    def write_reports
+      # Needs error checking for the reports directory. 
+      Dir.mkdir(@report_dir) unless File.directory?(@report_dir)
+      if File.directory?(@report_dir)
+        per_section_report_file = File.join(@report_dir, "report_per_section.txt")
+        per_section = File.open( per_section_report_file, 'w')
+        per_grade_report_file   = File.join(@report_dir, "report_per_grade.txt")
+        per_grade   = File.open( per_grade_report_file, 'w')
+        @sections.each_value { |sec|
+        }
+      end
+    end
+=end
   end
 end
 
