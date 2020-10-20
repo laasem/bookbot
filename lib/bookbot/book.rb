@@ -46,7 +46,6 @@ module BookBot
       book    = make_filename("tex")
       File.open(book, "w+") { |file|
         @sections.each_value { |sec|
-          header = true if sec.header
           presenter = BookBot::Presenter.adapter_for(:section, :latex)
           text = presenter.present(sec)
           file.puts text
